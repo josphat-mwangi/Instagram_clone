@@ -1,12 +1,13 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="content-section">
     <div class="media">
-        <img src="" alt="" class="rounded-circle ">
+        <img class="rounded-circle account-img" src="{{ user.profile.profile_photo.url }}">
         <div class="media-body">
-            <h2></h2>
-            <p></p>
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+            <p class="text-secondary">BIO :{{ user.profile.bio }}</p>
         </div>
     </div>
     <form method="POST" enctype="multipart/form-data">
@@ -21,5 +22,4 @@
         </div>
     </form>
 </div>
-
-{% endblock %}
+{% endblock content %}

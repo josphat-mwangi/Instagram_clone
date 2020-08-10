@@ -2,11 +2,14 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm
+from.models import Image
 
 
 # Create your views here.
 def home(request):
-    return render(request, 'index.html')
+    photos = Image.photo_display()
+    
+    return render(request, 'index.html' , {"photos": photos})
 
 def register(request):
     if request.method == 'POST': #if the form has been submitted
@@ -36,11 +39,11 @@ def profile(request):
 
     else:
         u_form = UserUpdateForm(instance=request.user)
-        # p_form = ProfileUpdateForm(instance=request.user.profile)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
         'u_form': u_form,
-        # 'p_form': p_form
+        'p_form': p_form
     }
 
     return render(request, 'profile.html', context)

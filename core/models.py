@@ -12,13 +12,19 @@ class Image(models.Model):
     profile=models.ForeignKey('Profile',on_delete=models.CASCADE)
 
 
+
+    @classmethod
+    def photo_display(cls):
+       photos = cls.objects.filter()
+       return photos 
+
     def __str__(self):
-        return Image
+        return f'{self.image_name }'
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    profile_photo = models.ImageField(upload_to='profile_pics')
+    profile_photo = models.ImageField(default='default.jpeg', upload_to='images/')
     bio = models.CharField(max_length=500)
 
     def __str__(self):
