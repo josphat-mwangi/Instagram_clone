@@ -1,28 +1,32 @@
 {% extends "base.html" %}
+{% load bootstrap4 %}
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="col-md-4" style="padding-left: 100px; margin-top: 20px;">
-    <img src="../static/photo/ig.png" alt="">
-</div>
-<div class="col-md-6" style="float: right;margin-top: 150px; padding-right: 150px;">
-    <div class="content-section">
-        <form method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4 text-center" style="font-family: 'Pacifico', cursive;">Instagram</legend>
-                {{ form|crispy }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn btn-outline-info btn-primary" type="submit">Login</button>
+<div class="container">
+    <div class="col-md-4">
+        <img src="../static/photo/ig.png" alt="">
+    </div>
+    <div class="col-md-6" >
+        <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4 text-center" style="font-family: 'Pacifico', cursive;">Instagram
+                    </legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info btn-primary" type="submit">Login</button>
+                </div>
+            </form>
+            <div class="border-top pt-3">
+                <small class="text-muted">
+                    Need An Account? <a class="ml-2" href="{%url 'register' %}">Sign Up Now</a>
+                </small>
             </div>
-        </form>
-        <div class="border-top pt-3">
-            <small class="text-muted">
-                Need An Account? <a class="ml-2" href="{%url 'register' %}">Sign Up Now</a>
-            </small>
         </div>
     </div>
+    
+    {% endblock content %}
 </div>
-
-{% endblock content %}

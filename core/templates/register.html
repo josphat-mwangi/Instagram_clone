@@ -1,24 +1,26 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 {% load crispy_forms_tags %}
 {% block content %}
-
-<div class="content-section col-md-5 col-lg-5" style="align-items: center;margin-left: 550px; margin-top: 50px; padding: 40px;">
-    <form method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4 text-center"><span style="font-family: 'Pacifico', cursive;">Instagram</span>  <br>
-            <br> Sign up to see photos and <br>  videos from your friends.  </legend>
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info btn-primary" style="width: 100%;" type="submit">Sign Up</button>
+<div class="container">
+    <div class="content-section col-md-5 col-lg-5">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4 text-center"><span
+                        style="font-family: 'Pacifico', cursive;">Instagram</span> <br>
+                    <br> Sign up to see photos and <br> videos from your friends. </legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info btn-primary" style="width: 100%;" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
         </div>
-    </form>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
-        </small>
     </div>
+    {% endblock content %}
 </div>
-{% endblock content %}

@@ -1,14 +1,29 @@
 {%extends 'base.html'%}
+{% load bootstrap4 %}
 {% load static %}
 {% block content%}
 
 {{block.super}}
 <div class="container">
-    {%for photo in photos%}
-        <img src="{{photo.image.url}}" alt="">
-        {{photo.Image.image_name}}
-    {%endfor%}
-    HEY WORLDs
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-md-11">
+            {%for photo in photos%}
+            <div class="card" style="width: 100%;">
+                <img src="{{photo.image.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h1>{{photo.image_name}}</h1>
+                    <p class="card-text">{{photo.image_caption}}</p>
+                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                    <i class="fa fa-comment-o"></i>
+                    <i class="fa fa-send-o"></i>
+                    <i class="fa fa-bookmark-o"></i>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <div class="col"></div>
+    </div>
 </div>
     
 {%endblock%}

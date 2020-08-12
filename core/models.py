@@ -9,6 +9,7 @@ class Image(models.Model):
     likes=models.IntegerField(default=0)
     comments=models.TextField()
     image = models.ImageField(upload_to='images/',blank=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
     profile=models.ForeignKey('Profile',on_delete=models.CASCADE)
 
 
