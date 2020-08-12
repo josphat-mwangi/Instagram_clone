@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm
+from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm,CommentForm
+from django.contrib.auth.models import User
 from.models import Image
 
 
@@ -59,3 +60,21 @@ def search(request):
     else:
         message = 'Enter term to search'
         return render(request, 'search.html', {'message':message})
+
+@login_required (login_url='/accounts/register/')
+def comment(request,pk):
+    current_user = request.user
+    post = Image.get_single_post(pk)
+    comments = Image.get_post_comment(post.id)
+    form = CommentForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid:
+            comment = form.save(commit=False)
+            comment.user = current_user
+            comment.post = post
+            comment.image_id = post.id
+            comment.save()
+            return redirect('home')
+        else:
+            form = CommentForm()
+    return render(request, 'comment.html', {"form":form, "post":post, "comments":comments})

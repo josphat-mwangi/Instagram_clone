@@ -17,7 +17,7 @@
                     <p>likes {{photo.likes}}</p>
                     <p>{{photo.pub_date}}</p>
                     <i class="fa fa-heart-o" aria-hidden="true"></i>
-                    <i class="fa fa-comment-o"></i>
+                    <a href="{%url 'comment' photo.id%}"><i class="fa fa-comment-o"></i></a>
                     <i class="fa fa-send-o"></i>
                     <i class="fa fa-bookmark-o"></i>
                 </div>
