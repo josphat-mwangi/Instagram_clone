@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm,CommentForm
 from django.contrib.auth.models import User
-from.models import Image
+from.models import Image,Posts,Comments
 
 
 # Create your views here.
@@ -64,8 +64,8 @@ def search(request):
 @login_required (login_url='/accounts/register/')
 def comment(request,pk):
     current_user = request.user
-    post = Image.get_single_post(pk)
-    comments = Image.get_post_comment(post.id)
+    post = Posts.get_single_post(pk)
+    comments = Comments.get_post_comment(post.id)
     form = CommentForm(request.POST)
     if request.method == 'POST':
         if form.is_valid:
@@ -76,5 +76,5 @@ def comment(request,pk):
             comment.save()
             return redirect('home')
         else:
-            form = CommentForm()
+            form = NewCommentsForm()
     return render(request, 'comment.html', {"form":form, "post":post, "comments":comments})
