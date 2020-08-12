@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm,CommentForm
+from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm,CommentForm,PostForm
 from django.contrib.auth.models import User
 from.models import Image,Posts,Comments
 
@@ -78,3 +78,21 @@ def comment(request,pk):
         else:
             form = NewCommentsForm()
     return render(request, 'comment.html', {"form":form, "post":post, "comments":comments})
+
+
+@login_required
+def posts(request):
+    if request.method == 'POST':
+        post_form = PostForm(request.POST,files =request.FILES)
+        if post_form.is_valid():
+            single_post = Posts(user =request.user ,image = request.FILES['image'], description = request.POST['description'] )
+            single_post.save()
+            messages.success(request, ('Your post was successfully updated!'))
+            return redirect(reverse('profiles', kwargs = {'username': request.user.username}))
+        else:
+            messages.error(request, ('Please correct the error below.'))
+    else:
+        post_form = PostForm()
+    return render(request,'post.html', {
+        'post_form': post_form
+    })
