@@ -28,5 +28,23 @@ class Profile(models.Model):
     profile_photo = models.ImageField(default='default.jpeg', upload_to='images/')
     bio = models.CharField(max_length=500)
 
+    def save_profile(self):
+        self.save()
+    
+    @classmethod
+    def search_profile(cls, name):
+        profile = Profile.objects.filter(user__username__icontains = name)
+        return profile
+    
+    @classmethod
+    def get_by_id(cls, id):
+        profile = Profile.objects.get(user = id)
+        return profile
+
+    @classmethod
+    def filter_by_id(cls, id):
+        profile = Profile.objects.filter(user = id).first()
+        return profile
+
     def __str__(self):
         return f'{self.user.username} Profile'

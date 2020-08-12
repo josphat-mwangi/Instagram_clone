@@ -1,31 +1,48 @@
-<!-- <div class="wrapper">
-  <div class="container">
-    <div class="nav-list">
-      <nav class="navbar">
-        <h1 style="font-family: 'Pacifico', cursive;
-">Instagram</h1>
-        <div class="search_bar">
-          <input type="text" placeholder="Search">
-          <a href="search"><i class="fa fa-search"></i></a>
+{% load static %}
+<link href="https://fonts.googleapis.com/css?family=Archivo+Narrow|Charmonman|Kodchasan|Dancing+Script|Spirax" rel="stylesheet">
+
+<nav class="navbar bg-light ">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href=""><i class="fa fa-instagram"></i>
+      </a>
+      <a class="navbar-brand" id="victor" href="">Instagram
+      </a>
+    </div>
+    <div class="col-sm-4 col-md-4 navbar-right">
+    
+      <form class="navbar-form" role="search" action="{% url 'search' %}">
+    
+        <div class="input-group">
+          <input type="text" class="form-control mr-sm-4" placeholder="Search User" name="user">
+          <div class="input-group-btn">
+            <button class="btn btn-outline-primary" type="submit"><i class="fa fa-search"></i></button>
+          </div>
         </div>
-        <ul class="icon-list">
-          <li class="icons"><i class="fa fa-home active" onclick="selectIcon(0)"></i></li>
-          
-          <li class="icons"><i class="fa fa-plus-square" onclick="selectIcon(2)"></i></li>
-          <li class="icons"><i class="fa fa-heart" onclick="selectIcon(3)"></i></li>
-          <li class="icons"><i class="fa fa-user" onclick="selectIcon(4)"></i></li>
-        </ul>
-      </nav>
+    
+      </form>
+    </div>
+    <div>
+      <a href=""><i class="fa fa-home"></i></a>
+    </div>
+    <div class="col-sm-6 col-md-6">
+      {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="fa fa-user"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+            <a class="dropdown-item"  href="/profile
+            ">My Profile</a>
+            <a class="dropdown-item" href="">Upload</a>
+            <a class="dropdown-item" href="/logout">Logout</a>
+      {%else%}  
+            <a class="dropdown-item" href="/accounts/login">Login</a>
+            <a class='btn btn-default' href="/accounts/register">Register</a>
+          </div>
+        </li>
+      {% endif %} 
     </div>
   </div>
-</div>
-
-<script>
-  let Icons = document.querySelectorAll('.fa')
-    let current = 0;
-    function selectIcon(index) {
-      Icons[current].classList.remove('active');
-      current = index;
-      Icons[current].classList.add('active');
-    }
-</script> -->
+</nav>
