@@ -19,6 +19,11 @@ class Image(models.Model):
        photos = cls.objects.filter()
        return photos 
     
+    @classmethod
+    def get_single_photo(cls,id):
+        image = cls.objects.get(pk=id)
+        return image
+    
    
 
     def __str__(self):
@@ -62,25 +67,11 @@ class Comments(models.Model):
 
     def save_comment(self):
         self.save()
-
     @classmethod
-    def single_comment(cls,id):
-        comment = cls.objects.all()
-        return comment
-
-    @classmethod
-    def get_comment(cls,id):
-        comments = cls.objects.all()
+    def get_comments(cls,id):
+        comments = cls.objects.filter(image__id=id)
         return comments
 
-    @classmethod
-    def get_post_comment(cls,pk):
-        post = Posts.get_single_post(pk)
-        comments = []
-        all_comments = Comments.objects.filter(image_id=post.id).all()
-        comments += all_comments
-        comment_count = len(comments)
-        return comments
 
 
 

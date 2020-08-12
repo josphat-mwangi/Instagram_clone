@@ -1,37 +1,32 @@
-{% extends 'comments/base.html' %} 
-{% load static %} 
-{% load bootstrap4 %}
-
-<!-- Content block -->
-{% block content %} {{block.super}}
-
+{%extends 'base.html'%}
+{% block content %}
+{% if comments %}
 <div class="container">
-    <hr>
-    <!-- Empty Div -->
-    <div class="col-md-7 col-lg-7"> <br>
-        <img src="{{post.image.url}}" class="img-responsive" alt="Image">
-        <!-- loop through comments -->
-        <h4>View all {{ comment|length }} comments</h4> {% for comment in comments %}
-        <p><strong> {{comment.user.username}}:</strong>{{comment.comment}} {{comment.date_posted}}</hp>
-            <!-- end loop -->
-            {% endfor %}
+    {% if number == 1 %}
+    <i class="text-center">{{number}} comment</i>
+    {% else %}
+    <i class="text-center">{{number}} comments</i>
+    {% endif %}
+    {% for comment in comments %}
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="card" style="width: 30rem;">
+                <div class="card-header">
+                    <h4 class="text-center mycom">{{comment.user.username}}</h4>
+                    <span>
+                        <hr></span>
+                    <span class="mr-5"> <img src="{{comment.user.profile.profile_photo.url}}" alt=""
+                            style="border-radius: 50%; width:50px; height:50px; border-color: brown; border-width: 1px;"></span>
+                    <span class="text-center">{{comment.comment}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3"></div>
     </div>
-    <div class="col-md-3 col-lg-3">
-
-        <form action="{% url 'comment' post.id%}" method="post" enctype="multipart/form-data">
-
-            {% csrf_token %} {% bootstrap_form form %}
-
-            <input type="submit" class="btn btn-success btn-sm" value="Post">
-
-        </form>
-
-    </div>
-
-    <!-- Empty Div -->
-    <div class="col-md-2 col-lg-2">
-
-    </div>
+    {% endfor %}
 </div>
-
+{% else %}
+<p>no comments yet</p>
+{% endif %}
 {% endblock %}

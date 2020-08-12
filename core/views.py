@@ -61,24 +61,6 @@ def search(request):
         message = 'Enter term to search'
         return render(request, 'search.html', {'message':message})
 
-@login_required (login_url='/accounts/register/')
-def comment(request,pk):
-    current_user = request.user
-    post = Posts.get_single_post(pk)
-    comments = Comments.get_post_comment(post.id)
-    form = CommentForm(request.POST)
-    if request.method == 'POST':
-        if form.is_valid:
-            comment = form.save(commit=False)
-            comment.user = current_user
-            comment.post = post
-            comment.image_id = post.id
-            comment.save()
-            return redirect('home')
-        else:
-            form = NewCommentsForm()
-    return render(request, 'comment.html', {"form":form, "post":post, "comments":comments})
-
 
 @login_required
 def posts(request):
@@ -96,3 +78,25 @@ def posts(request):
     return render(request,'post.html', {
         'post_form': post_form
     })
+
+@login_required (login_url='/accounts/register/')
+def add_comment(request,id):
+   current_user = request.user
+   image = Image.get_single_photo(id=id)
+   if request.method == 'POST':
+       form = CommentForm(request.POST)
+       print(form)
+       if form.is_valid():
+           comment = form.save(commit=False)
+           comment.user = current_user
+           comment.image_id = id
+           comment.save()
+       return redirect('home')
+   else:
+       form = CommentForm()
+       return render(request,'new_comment.html',{"form":form,"image":image})
+ 
+def comments(request,id):
+   comments = Comments.get_comments(id)
+   number = len(comments   )
+   return render(request,'comment.html',{"comments":comments,"number":number})
