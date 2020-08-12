@@ -1,27 +1,31 @@
-<header class="site-header">
-  <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-    <div class="container">
-      <a class="navbar-brand mr-4" href="">Django Blog</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-        aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarToggle">
-        <div class="navbar-nav mr-auto">
-          <a class="nav-item nav-link" href="">Home</a>
-          <a class="nav-item nav-link" href="">About</a>
+<!-- <div class="wrapper">
+  <div class="container">
+    <div class="nav-list">
+      <nav class="navbar">
+        <h1 style="font-family: 'Pacifico', cursive;
+">Instagram</h1>
+        <div class="search_bar">
+          <input type="text" placeholder="Search">
+          <a href="search"><i class="fa fa-search"></i></a>
         </div>
-        <!-- Navbar Right Side -->
-        <div class="navbar-nav">
-          {% if user.is_authenticated %}
-          <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-          <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-          {% else %}
-          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-          <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-          {% endif %}
-        </div>
-      </div>
+        <ul class="icon-list">
+          <li class="icons"><i class="fa fa-home active" onclick="selectIcon(0)"></i></li>
+          
+          <li class="icons"><i class="fa fa-plus-square" onclick="selectIcon(2)"></i></li>
+          <li class="icons"><i class="fa fa-heart" onclick="selectIcon(3)"></i></li>
+          <li class="icons"><i class="fa fa-user" onclick="selectIcon(4)"></i></li>
+        </ul>
+      </nav>
     </div>
-  </nav>
-</header>
+  </div>
+</div>
+
+<script>
+  let Icons = document.querySelectorAll('.fa')
+    let current = 0;
+    function selectIcon(index) {
+      Icons[current].classList.remove('active');
+      current = index;
+      Icons[current].classList.add('active');
+    }
+</script> -->

@@ -1,11 +1,14 @@
 {%extends 'base.html'%}
+{% load static %}
 {% block content%}
 
 {{block.super}}
+<div class="container">
     {%for photo in photos%}
-
         <img src="{{photo.image.url}}" alt="">
         {{photo.Image.image_name}}
     {%endfor%}
     HEY WORLDs
+</div>
+    
 {%endblock%}

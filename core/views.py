@@ -7,7 +7,7 @@ from.models import Image
 
 # Create your views here.
 def home(request):
-    photos = Image.photo_display()
+    photos = Image.objects.all()
     
     return render(request, 'index.html' , {"photos": photos})
 
