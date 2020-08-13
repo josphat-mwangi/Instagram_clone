@@ -67,10 +67,10 @@ def posts(request):
     if request.method == 'POST':
         post_form = PostForm(request.POST,files =request.FILES)
         if post_form.is_valid():
-            # single_post = Posts(user =request.user ,image = request.FILES['image'], description = request.POST['description'] )
-            # single_post.save()
+            single_post = Posts(user =request.user ,image = request.FILES['image'] )
+            single_post.save()
             messages.success(request, ('Your post was successfully updated!'))
-            return redirect(reverse('profiles', kwargs = {'username': request.user.username}))
+            return redirect('profile')
         else:
             messages.error(request, ('Please correct the error below.'))
     else:

@@ -23,13 +23,13 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['profile_photo','bio']
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Image
-        fields = ('image','image_caption')
+        model = Posts
+        fields = ['image','description','post_date','description','location']
 
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Image
-        exclude = ['image', 'image_caption',' image_name',]
+# class CommentForm(forms.ModelForm):
+#     class Meta:
+#         model = Image
+#         exclude = ['image', 'image_caption',' image_name',]
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
