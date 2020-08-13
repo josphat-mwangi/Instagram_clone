@@ -7,7 +7,7 @@ class Image(models.Model):
     image_name = models.CharField(max_length=60)
     image_caption=models.TextField()
     likes=models.IntegerField(default=0)
-    comments=models.TextField()
+    # comments=models.TextField()
     image = models.ImageField(upload_to='images/',blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     profile=models.ForeignKey('Profile',on_delete=models.CASCADE)
@@ -58,7 +58,7 @@ class Profile(models.Model):
 
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ForeignKey('Posts',on_delete=models.CASCADE)
+    image = models.ForeignKey(Image,on_delete=models.CASCADE)
     comment = models.CharField(max_length=150, blank=True)
     date_commented = models.DateTimeField(auto_now_add=True)
 
@@ -71,10 +71,6 @@ class Comments(models.Model):
     def get_comments(cls,id):
         comments = cls.objects.filter(image__id=id)
         return comments
-
-
-
-
 
 class Posts(models.Model):
     image = models.ImageField(upload_to = 'photos/',blank=True)
