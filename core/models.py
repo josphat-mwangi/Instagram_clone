@@ -51,6 +51,7 @@ class Profile(models.Model):
     def get_by_id(cls, id):
         profile = Profile.objects.get(user = id)
         return profile
+    
 
     @classmethod
     def filter_by_id(cls, id):
@@ -62,7 +63,7 @@ class Profile(models.Model):
 
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ForeignKey(Image,on_delete=models.CASCADE)
+    image = models.ForeignKey('Post',on_delete=models.CASCADE)
     comment = models.CharField(max_length=150, blank=True)
     date_commented = models.DateTimeField(auto_now_add=True)
 
@@ -88,3 +89,8 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+    @classmethod
+    def get_single_photo(cls,id):
+        image = cls.objects.get(pk=id)
+        return image

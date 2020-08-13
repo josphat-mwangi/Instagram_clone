@@ -128,13 +128,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
-    
-
-
 @login_required (login_url='/accounts/register/')
 def add_comment(request,id):
    current_user = request.user
-   image = Image.get_single_photo(id=id)
+   image = Post.get_single_photo(id=id)
    if request.method == 'POST':
        form = CommentForm(request.POST)
        print(form)
@@ -143,10 +140,13 @@ def add_comment(request,id):
            comment.user = current_user
            comment.image_id = id
            comment.save()
-       return redirect('home')
+       return redirect('userhome')
    else:
        form = CommentForm()
-       return render(request,'new_comment.html',{"form":form,"image":image})
+       return render(request,'new_comment.html',{"form":form,"image":image})    
+
+
+
  
 def comments(request,id):
    comments = Comments.get_comments(id)

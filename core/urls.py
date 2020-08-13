@@ -10,7 +10,7 @@ from .views import (
 )
 
 urlpatterns=[
-    
+    # url(r'^$',views.home, name='home'),
     url(r'^$',views.userhome, name='userhome'),
     url(r'^search/', views.search, name='search'),
     url(r'^new_comment/(\d+)/$' ,views.add_comment,name='newComment'),
