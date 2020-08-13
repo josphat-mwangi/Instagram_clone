@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm,CommentForm,PostForm
 from django.contrib.auth.models import User
-from.models import Image,Posts,Comments
+from.models import Image,Post,Comments
 from django.views.generic import (
     ListView,
     DetailView,
@@ -19,6 +19,11 @@ def home(request):
     photos = Image.objects.all()
     
     return render(request, 'index.html' , {"photos": photos})
+def userhome(request):
+    photos = Post.objects.all()
+    
+    return render(request, 'post.html' , {"photos": photos})
+
 
 def register(request):
     if request.method == 'POST': #if the form has been submitted
@@ -72,18 +77,23 @@ def search(request):
 
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'post.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
 
 
 class PostDetailView(DetailView):
     model = Post
+    template_name = 'post_details.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']
+    template_name = 'post_form.html' 
+    context_object_name = 'posts'
+    fields = ['title', 'content','image']
+    success_url = '/'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -92,6 +102,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
+    template_name = 'post_form.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
     fields = ['title', 'content']
 
     def form_valid(self, form):
@@ -107,6 +119,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
+    template_name = 'post_confirm_delete.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
     success_url = '/'
 
     def test_func(self):
