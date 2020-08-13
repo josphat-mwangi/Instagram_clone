@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm,UserRegistrationForm,ProfileUpdateForm,CommentForm,PostForm
 from django.contrib.auth.models import User
 from.models import Image,Posts,Comments
+from django.views.generic import ListView
 
 
 # Create your views here.
@@ -61,23 +62,12 @@ def search(request):
         message = 'Enter term to search'
         return render(request, 'search.html', {'message':message})
 
+class PostListView(ListView):
+    model = Post
+    template_name = 'posts/post_list.html'
+    context_object_name = 'posts'
+    ordering = ['-created_date']
 
-@login_required
-def posts(request):
-    if request.method == 'POST':
-        post_form = PostForm(request.POST,files =request.FILES)
-        if post_form.is_valid():
-            single_post = Posts(user =request.user ,image = request.FILES['image'] )
-            single_post.save()
-            messages.success(request, ('Your post was successfully updated!'))
-            return redirect('profile')
-        else:
-            messages.error(request, ('Please correct the error below.'))
-    else:
-        post_form = PostForm()
-    return render(request,'post.html', {
-        'post_form': post_form
-    })
 
 @login_required (login_url='/accounts/register/')
 def add_comment(request,id):

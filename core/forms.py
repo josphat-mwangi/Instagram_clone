@@ -23,8 +23,8 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['profile_photo','bio']
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Posts
-        fields = ['image','description','post_date','description','location']
+        model = Image
+        fields = ['image','image_caption']
 
 # class CommentForm(forms.ModelForm):
 #     class Meta:

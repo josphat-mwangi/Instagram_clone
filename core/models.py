@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 
@@ -11,6 +12,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images/',blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
     profile=models.ForeignKey('Profile',on_delete=models.CASCADE)
+   
 
 
 
@@ -72,35 +74,14 @@ class Comments(models.Model):
         comments = cls.objects.filter(image__id=id)
         return comments
 
-class Posts(models.Model):
-    image = models.ImageField(upload_to = 'photos/',blank=True)
-    post_date = models.DateTimeField(auto_now_add = True)
-    description = models.TextField(max_length=500, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    location = models.CharField(max_length=30, blank=True)
-   
-   
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.description
-
-    class Meta:
-        ordering = ['-post_date']
+        return self.title
 
     def get_absolute_url(self):
-        return reverse('posts:view', kwargs={'slug': self.slug})
-
-    @classmethod
-    def get_posts(cls):
-        post = Posts.objects.all()
-
-        return post
-    @classmethod
-    def get_single_post(cls, pk):
-        post = cls.objects.get(pk=pk)
-        return post
-
-    @property
-    def image_url(self):
-        if self.image and hasattr(self.image, 'url'):
-            return self.image.url
+        return reverse('post-detail', kwargs={'pk': self.pk})
